@@ -5,26 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LA COLMENA</title>
 
-  <!-- ICONOS PARA NAVEGADORES -->
+  <!-- ICONOS -->
   <link rel="icon" type="image/png" href="icons/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
   <link rel="shortcut icon" href="icons/favicon.ico" />
-
-  <!-- ICONO PARA iOS (iPhone / iPad) -->
   <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
 
-  <!-- MANIFESTO PARA PWA (Android) -->
+  <!-- PWA -->
   <link rel="manifest" href="icons/site.webmanifest" />
-
-  <!-- CONFIGURACIÓN DE COLOR DEL NAVEGADOR EN ANDROID -->
   <meta name="theme-color" content="#ffffff" />
-  
+
   <!-- ESTILOS -->
   <link rel="stylesheet" href="styles.css" />
-  
-  <!-- SCRIPTS -->
+
+  <!-- ESTILOS DEL MODAL -->
+  <style>
+    #imageModal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.7);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      z-index:9999;
+    }
+    #imageModal img{
+      max-width:90%;
+      max-height:90%;
+      background:#fff;
+      border-radius:12px;
+    }
+    .image-backdrop{
+      width:100%;
+      height:100%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+  </style>
+
+  <!-- SCRIPT -->
   <script src="script.js" defer></script>
 </head>
+
 
 
 <!-- NOMBRE QUE APARECE AL AÑADIR A INICIO -->
@@ -330,6 +353,7 @@ function renderProducts(filter=''){
     alt="${p.nombre}"
     style="width:60px;height:60px;object-fit:contain;border-radius:8px;border:1px solid #eee;background:#fff;margin-bottom:6px;cursor:pointer;"
     onclick="openModal('${p.imagen || 'img/default.jpg'}')"
+
   />
 </div>
 
@@ -471,6 +495,7 @@ isMayoreo = false;
 });
 </script>
 <!-- Modal para ampliar la imagen -->
+<!-- Modal para ampliar la imagen -->
 <div id="imageModal" style="
   display:none;
   position:fixed;
@@ -484,7 +509,9 @@ isMayoreo = false;
   z-index:1000;
   cursor:pointer;
 ">
-  <img id="modalImg" src="" style="max-width:90%; max-height:90%; border-radius:10px; box-shadow:0 0 15px #000;">
+  <div style="width:100%;height:100%;display:flex;justify-content:center;align-items:center;" onclick="closeModal()">
+    <img id="modalImg" src="" style="max-width:90%; max-height:90%; border-radius:10px; box-shadow:0 0 15px #000;">
+  </div>
 </div>
 
 <script>
@@ -495,10 +522,10 @@ isMayoreo = false;
     modal.style.display = 'flex';
   }
 
-  document.getElementById('imageModal').onclick = function() {
-    this.style.display = 'none';
+  function closeModal(){
+    const modal = document.getElementById('imageModal');
+    modal.style.display = 'none';
   }
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </script>
 </body>
 </html>
