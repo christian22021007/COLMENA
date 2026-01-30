@@ -300,8 +300,9 @@ const products = [
 
 /* --- ESTADO --- */
 let selected = [];
-let folio = parseInt(localStorage.getItem('folio') || "1");
-document.getElementById('folioSpan').textContent = folio;
+let folio = parseInt(localStorage.getItem('folioNumber') || "1");
+let folioText = "MIEL-" + String(folio).padStart(5, "0");
+document.getElementById('folioSpan').textContent = folioText;
 document.getElementById('dateSpan').textContent = new Date().toLocaleDateString();
 const productListDiv = document.getElementById('productList');
 const cartDiv = document.getElementById('cart');
@@ -433,7 +434,8 @@ document.getElementById('checkCodeBtn').addEventListener('click', ()=> {
 });
 
 /* --- ENVÍO POR WHATSAPP --- */
-document.getElementById('sendWhats').addEventListener('click', ()=> {
+document.getElementById('sendWhats').addEventListener('click', ()=> {const folioText = "MIEL-" + String(folio).padStart(5, "0");
+
   if(selected.length === 0){ alert('El carrito está vacío.'); return; }
 
   const name = document.getElementById('clientName').value || "Cliente";
@@ -443,7 +445,7 @@ document.getElementById('sendWhats').addEventListener('click', ()=> {
   let totalProducts = selected.reduce((sum,item)=>sum+item.qty,0);
   let tipoCompra = isMayoreo ? "MAYOREO" : "MENUDEO";
 
-  let message = `*Pedido La Colmena*\nCliente: ${name}\n${address? "Domicilio: "+address+"\n" : ""}`;
+  let message = `*Pedido La Colmena*\nFolio: ${folioText}\nCliente: ${name}\n${address? "Domicilio: "+address+"\n" : ""}`;
   message += `Tipo de compra: ${tipoCompra}\nCantidad total de productos: ${totalProducts}\n\n`;
 
   selected.forEach(item => {
@@ -456,6 +458,16 @@ document.getElementById('sendWhats').addEventListener('click', ()=> {
 
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
   window.open(url, '_blank');
+// --- INCREMENTAR Y GUARDAR FOLIO ---
+folio++;
+localStorage.setItem('folio', folio);
+document.getElementById('folioSpan').textContent = `MIEL-${String(folio).padStart(5,'0')}`;
+// --- LIMPIAR CARRITO DESPUÉS DE ENVIAR ---
+selected = [];
+cartDiv.innerHTML = '';
+totalDiv.textContent = 'Total: $0.00';
+mayoreoNotice.style.display = 'none';
+isMayoreo = false;
 });
 </script>
 <!-- Modal para ampliar la imagen -->
@@ -486,8 +498,7 @@ document.getElementById('sendWhats').addEventListener('click', ()=> {
   document.getElementById('imageModal').onclick = function() {
     this.style.display = 'none';
   }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </script>
 </body>
 </html>
-
-
