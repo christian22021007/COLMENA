@@ -102,6 +102,36 @@
 .product-item:active img {
   transform: scale(1.08);
 }
+/* Controles de cantidad del carrito */
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.qty-controls button {
+  min-width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  background: #f7c84f;
+  color: #000;
+  cursor: pointer;
+}
+
+/* Botón eliminar */
+.qty-controls button:last-child {
+  background: #ffe3e3;
+  color: #a00;
+}
+
+/* Efecto al tocar */
+.qty-controls button:active {
+  transform: scale(0.92);
+}
+
 
   </style>
 
@@ -486,7 +516,8 @@ function updateCart(){
         <div class="qty-controls">
           <button onclick="changeQty(${idx},-1)">-</button>
           <button onclick="changeQty(${idx},1)">+</button>
-          <button onclick="removeProduct(${idx})" style="background:#ffdede;border:1px solid #f6b0b0;padding:6px;border-radius:6px;margin-left:6px">X</button>
+          <button onclick="removeProduct(${idx})">✕</button>
+
         </div>
       </div>
     `;
