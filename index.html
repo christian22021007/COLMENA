@@ -20,6 +20,43 @@
 
   <!-- ESTILOS DEL MODAL -->
   <style>
+.product-image-wrapper {
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.product-item:active {
+  transform: scale(0.98);
+}
+
+.layout button{
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:#f7c84f;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.layout > div:hover{
+  transform:translateY(-4px);
+  box-shadow:0 10px 22px rgba(0,0,0,.2);
+}
+
+.layout > div{
+  background:#fff;
+  border-radius:12px;
+  padding:16px;
+  box-shadow:0 6px 14px rgba(0,0,0,.15);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+
+.layout{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(220px,1fr));
+  gap:16px;
+}
     #imageModal{
       position:fixed;
       inset:0;
@@ -42,6 +79,30 @@
       justify-content:center;
       align-items:center;
     }
+/* Animación general suave */
+.product-item {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 10px;
+}
+
+/* Al tocar o pasar el mouse */
+.product-item:hover,
+.product-item:active {
+  transform: scale(1.02);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* Animación para imágenes */
+.product-item img {
+  transition: transform 0.25s ease;
+}
+
+/* Zoom ligero en imagen */
+.product-item:hover img,
+.product-item:active img {
+  transform: scale(1.08);
+}
+
   </style>
 
   <!-- SCRIPT -->
@@ -111,7 +172,15 @@
   </div>
 
   <div style="margin:8px 0;display:flex;gap:8px;align-items:center">
-    <input id="clientCode" type="text" placeholder="Código de cliente para MAYOREO" style="flex:1;min-width:160px" />
+    <input
+  id="clientCode"
+  type="tel"
+  inputmode="numeric"
+  maxlength="5"
+  placeholder="Código"
+  style="width:110px;padding:8px;text-align:center;font-weight:bold;"
+/>
+
     <button id="checkCodeBtn">Aplicar código</button>
   </div>
 
