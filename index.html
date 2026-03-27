@@ -20,43 +20,6 @@
 
   <!-- ESTILOS DEL MODAL -->
   <style>
-.product-image-wrapper {
-  overflow: hidden;
-  border-radius: 10px;
-}
-
-.product-item:active {
-  transform: scale(0.98);
-}
-
-.layout button{
-  width:100%;
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  background:#f7c84f;
-  font-weight:700;
-  cursor:pointer;
-}
-
-.layout > div:hover{
-  transform:translateY(-4px);
-  box-shadow:0 10px 22px rgba(0,0,0,.2);
-}
-
-.layout > div{
-  background:#fff;
-  border-radius:12px;
-  padding:16px;
-  box-shadow:0 6px 14px rgba(0,0,0,.15);
-  transition:transform .2s ease, box-shadow .2s ease;
-}
-
-.layout{
-  display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(220px,1fr));
-  gap:16px;
-}
     #imageModal{
       position:fixed;
       inset:0;
@@ -79,80 +42,6 @@
       justify-content:center;
       align-items:center;
     }
-/* Animación general suave */
-.product-item {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  border-radius: 10px;
-}
-
-/* Al tocar o pasar el mouse */
-.product-item:hover,
-.product-item:active {
-  transform: scale(1.02);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-}
-
-/* Animación para imágenes */
-.product-item img {
-  transition: transform 0.25s ease;
-}
-
-/* Zoom ligero en imagen */
-.product-item:hover img,
-.product-item:active img {
-  transform: scale(1.08);
-}
-/* Controles de cantidad del carrito */
-.qty-controls {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.qty-controls button {
-  min-width: 32px;
-  height: 32px;
-  padding: 0;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  background: #f7c84f;
-  color: #000;
-  cursor: pointer;
-}
-
-/* Botón eliminar */
-.qty-controls button:last-child {
-  background: #ffe3e3;
-  color: #a00;
-}
-
-/* Efecto al tocar */
-.qty-controls button:active {
-  transform: scale(0.92);
-}
-#cartFloat {
-  position: fixed;
-  bottom: 90px;
-  right: 16px;
-  background: #f7c84f;
-  border: none;
-  border-radius: 50px;
-  padding: 12px 16px;
-  font-size: 18px;
-  font-weight: bold;
-  box-shadow: 0 6px 16px rgba(0,0,0,.25);
-  cursor: pointer;
-  display: none;
-  z-index: 9999;
-}
-
-#cartFloat:active {
-  transform: scale(0.95);
-}
-
-
-
   </style>
 
   <!-- SCRIPT -->
@@ -222,15 +111,7 @@
   </div>
 
   <div style="margin:8px 0;display:flex;gap:8px;align-items:center">
-    <input
-  id="clientCode"
-  type="tel"
-  inputmode="numeric"
-  maxlength="5"
-  placeholder="Código"
-  style="width:110px;padding:8px;text-align:center;font-weight:bold;"
-/>
-
+    <input id="clientCode" type="text" placeholder="Código de cliente para MAYOREO" style="flex:1;min-width:160px" />
     <button id="checkCodeBtn">Aplicar código</button>
   </div>
 
@@ -260,29 +141,22 @@
 </div>
 
 <div class="footer">
-  <small>Tel: 3313311304 • 3318553688 — WhatsApp • La Colmena</small>
+  <small>Tel: 6642338889 • 3313311304 — WhatsApp • La Colmena</small>
 </div>
 
 <script>
 function money(v){ return '$' + Number(v).toFixed(2); }
-function scrollToCart() {
-  document.getElementById('totalDiv').scrollIntoView({
-    behavior: 'smooth'
-  });
-}
-
-
 
 /* --- LISTA COMPLETA DE PRODUCTOS --- */
 const products = [
   { nombre: "MIEL DE ABEJA a granel 1 kg", precioMenudeo: 135.00, precioMayoreo: 75.00, imagen: "img/default.jpg" },
-  { nombre: "MIEL DE ABEJA toper 1/4", precioMenudeo: 60.00, precioMayoreo: 31.00, imagen: "img/default.jpg" },
-  { nombre: "MIEL DE ABEJA toper de 1/2", precioMenudeo: 110.00, precioMayoreo: 60.00, imagen: "img/default.jpg" },
-  { nombre: "MIEL DE ABEJA toper 1 lt.", precioMenudeo: 200.00, precioMayoreo: 110.00, imagen: "img/default.jpg" },
+  { nombre: "MIEL DE ABEJA toper 1/4", precioMenudeo: 78.00, precioMayoreo: 50.00, imagen: "img/default.jpg" },
+  { nombre: "MIEL DE ABEJA toper de 1/2", precioMenudeo: 145.00, precioMayoreo: 97.00, imagen: "img/default.jpg" },
+  { nombre: "MIEL DE ABEJA toper 1 lt.", precioMenudeo: 223.00, precioMayoreo: 150.00, imagen: "img/default.jpg" },
   { nombre: "MIEL DE ABEJA lacteo 250 ml.", precioMenudeo: 65.00, precioMayoreo: 34.00, imagen: "img/default.jpg" },
   { nombre: "MIEL DE ABEJA vidrio 250 ml.", precioMenudeo: 90.00, precioMayoreo: 45.00, imagen: "img/default.jpg" },
   { nombre: "MIEL DE ABEJA vidrio 500 ml.", precioMenudeo: 150.00, precioMayoreo: 80.00, imagen: "img/default.jpg" },
-  { nombre: "MIEL DE ABEJA vidrio 1.300 kg.", precioMenudeo: 225.00, precioMayoreo: 125.00, imagen: "img/mielgourmet1300.jpeg" },
+  { nombre: "MIEL DE ABEJA vidrio 1.300 kg.", precioMenudeo: 225.00, precioMayoreo: 125.00, imagen: "img/default.jpg" },
   { nombre: "MIEL DE ABEJA pet red. 250 ml.", precioMenudeo: 65.00, precioMayoreo: 34.00, imagen: "img/default.jpg" },
   { nombre: "MIEL DE ABEJA pet red. 480 ml.", precioMenudeo: 115.00, precioMayoreo: 60.00, imagen: "img/default.jpg" },
   { nombre: "MIEL DE ABEJA pet red. 500 ml.", precioMenudeo: 115.00, precioMayoreo: 62.00, imagen: "img/default.jpg" },
@@ -294,39 +168,39 @@ const products = [
   { nombre: "MIEL DE ABEJA con cubeta 19 lt. 27k", precioMenudeo: 2600.00, precioMayoreo: 2100.00, imagen: "img/default.jpg" },
   { nombre: "MIEL DE ABEJA cubeta a cambio 27 kg", precioMenudeo: 2600.00, precioMayoreo: 2050.00, imagen: "img/default.jpg" },
   { nombre: "KARMIIELITA a granel 1 kg", precioMenudeo: 45.00, precioMayoreo: 23.00, imagen: "img/default.jpg" },
-  { nombre: "KARMIIELITA toper 1/4", precioMenudeo: 25.00, precioMayoreo: 12.00, imagen: "img/default.jpg" },
-  { nombre: "KARMIIELITA toper 1/2", precioMenudeo: 45.00, precioMayoreo: 22.50, imagen: "img/default.jpg" },
-  { nombre: "KARMIIELITA toper 1 lt.", precioMenudeo: 80.00, precioMayoreo: 39.00, imagen: "img/default.jpg" },
+  { nombre: "KARMIIELITA toper 1/4", precioMenudeo: 28.00, precioMayoreo: 20.00, imagen: "img/default.jpg" },
+  { nombre: "KARMIIELITA toper 1/2", precioMenudeo: 54.00, precioMayoreo: 35.00, imagen: "img/default.jpg" },
+  { nombre: "KARMIIELITA toper 1 lt.", precioMenudeo: 92.00, precioMayoreo: 65.00, imagen: "img/default.jpg" },
   { nombre: "KARMIIELITA lacteo 250 ml.", precioMenudeo: 30.00, precioMayoreo: 14.50, imagen: "img/default.jpg" },
   { nombre: "KARMIIELITA vidrio 250 ml.", precioMenudeo: 50.00, precioMayoreo: 27.00, imagen: "img/default.jpg" },
   { nombre: "KARMIIELITA vidrio 500 ml.", precioMenudeo: 80.00, precioMayoreo: 44.00, imagen: "img/default.jpg" },
   { nombre: "KARMIIELITA vidrio 1.300 kg", precioMenudeo: 100.00, precioMayoreo: 53.00, imagen: "img/default.jpg" },
   { nombre: "KARMIIELITA pet red. 250 ml.", precioMenudeo: 30.00, precioMayoreo: 15.00, imagen: "img/default.jpg" },
   { nombre: "KARMIIELITA pet red. 480 ml.", precioMenudeo: 45.00, precioMayoreo: 24.00, imagen: "img/default.jpg" },
-  { nombre: "KARMIIELITA pet red. 500 ml.", precioMenudeo: 50.00, precioMayoreo: 25.00, imagen: "img/default.jpg" },
-  { nombre: "KARMIIELITA pet red 750 ml. 1.050 kg", precioMenudeo: 75.00, precioMayoreo: 37.50, imagen: "img/default.jpg" },
+  { nombre: "KARMIIELITA pet red. 500 ml.", precioMenudeo: 58.00, precioMayoreo: 39.00, imagen: "img/default.jpg" },
+  { nombre: "KARMIIELITA pet red 1000 ml. 1.050 kg", precioMenudeo: 110.00, precioMayoreo: 70.00, imagen: "img/default.jpg" },
   { nombre: "KARMIIELITA sq 250 ml.", precioMenudeo: 35.00, precioMayoreo: 17.50, imagen: "img/default.jpg" },
   { nombre: "KARMIIELITA sq 500 ml.", precioMenudeo: 60.00, precioMayoreo: 27.50, imagen: "img/default.jpg" },
-  { nombre: "KARMIIELITA cubetita 1 lt./1.400 kg", precioMenudeo: 100.00, precioMayoreo: 48.00, imagen: "img/default.jpg" },
-  { nombre: "KARMIIELITA cubetita 4 lt. / 5 kg", precioMenudeo: 250.00, precioMayoreo: 140.00, imagen: "img/default.jpg" },
+  { nombre: "KARMIIELITA cubetita 1 lt./1.400 kg", precioMenudeo: 110.00, precioMayoreo: 85.00, imagen: "img/default.jpg" },
+  { nombre: "KARMIIELITA cubetita 4 lt. / 5 kg", precioMenudeo: 320.00, precioMayoreo: 225.00, imagen: "img/default.jpg" },
   { nombre: "KARMIIELITA cubeta a cambio 19 lt", precioMenudeo: 1000.00, precioMayoreo: 625.00, imagen: "img/default.jpg" },
-  { nombre: "KARMIIELITA cubeta reciclada 19 lt", precioMenudeo: 1000.00, precioMayoreo: 675.00, imagen: "img/default.jpg" },
-  { nombre: "KARMIIELITA cubeta amarilla 19 lt", precioMenudeo: 1000.00, precioMayoreo: 685.00, imagen: "img/default.jpg" },
+  { nombre: "KARMIIELITA cubeta reciclada 19 lt", precioMenudeo: 950.00, precioMayoreo: 750.00, imagen: "img/default.jpg" },
+  { nombre: "KARMIIELITA cubeta amarilla 19 lt", precioMenudeo: 950.00, precioMayoreo: 750.00, imagen: "img/default.jpg" },
   { nombre: "KARMIIELITA pet 480 ml.( rebanada panal", precioMenudeo: 80.00, precioMayoreo: 41.00, imagen: "img/default.jpg" },
   { nombre: "KARMIIELITA pet red. 1 kg ( con panalito )", precioMenudeo: 100.00, precioMayoreo: 55.00, imagen: "img/default.jpg" },
-  { nombre: "POLEN a granel mixto 1 kg", precioMenudeo: 250.00, precioMayoreo: 175.00, imagen: "img/default.jpg" },
-  { nombre: "POLEN lacteo mixto 170 g", precioMenudeo: 80.00, precioMayoreo: 36.00, imagen: "img/polen170.jpeg" },
+  { nombre: "POLEN a granel mixto 1 kg", precioMenudeo: 350.00, precioMayoreo: 235.00, imagen: "img/default.jpg" },
+  { nombre: "POLEN lacteo mixto 170 g", precioMenudeo: 82.00, precioMayoreo: 55.00, imagen: "img/polen170.jpeg" },
   { nombre: "POLEN pet redondo 300 g", precioMenudeo: 125.00, precioMayoreo: 62.50, imagen: "img/default.jpg" },
-  { nombre: "JALEA REAL frasco 10 g", precioMenudeo: 75.00, precioMayoreo: 25.00, imagen: "img/jaleareal10.jpeg" },
-  { nombre: "JALEA REAL frasco 20 g", precioMenudeo: 120.00, precioMayoreo: 45.00, imagen: "img/jaleareal20.jpeg" },
-  { nombre: "JALEA REAL frasco 50 g", precioMenudeo: 200.00, precioMayoreo: 100.00, imagen: "img/jaleareal50.jpeg" },
+  { nombre: "JALEA REAL frasco 10 g", precioMenudeo: 55.00, precioMayoreo: 40.00, imagen: "img/jaleareal10.jpeg" },
+  { nombre: "JALEA REAL frasco 20 g", precioMenudeo: 72.00, precioMayoreo: 60.00, imagen: "img/jaleareal20.jpeg" },
+  { nombre: "JALEA REAL frasco 50 g", precioMenudeo: 150.00, precioMayoreo: 120.00, imagen: "img/jaleareal50.jpeg" },
   { nombre: "JALEA REAL fresca bolsa 1 kg", precioMenudeo: 0, precioMayoreo: 1700.00, imagen: "img/default.jpg" },
   { nombre: "JALEA REAL polvo leofilizada 1 kg", precioMenudeo: 0, precioMayoreo: 3350.00, imagen: "img/default.jpg" },
   { nombre: "PROPOLEO ( greña ) ( trampa ) 1 kg", precioMenudeo: 0, precioMayoreo: 0, imagen: "img/default.jpg" },
   { nombre: "PROPOLEO extracto a granel 1 lt.", precioMenudeo: 400.00, precioMayoreo: 250.00, imagen: "img/default.jpg" },
   { nombre: "PROPOLEO extracto envase piña 1 lt.", precioMenudeo: 400.00, precioMayoreo: 250.00, imagen: "img/default.jpg" },
   { nombre: "PROPOLEO extracto gotas 20 ml.", precioMenudeo: 60.00, precioMayoreo: 27.00, imagen: "img/propoleogotas.jpeg" },
-  { nombre: "PROPOLEO spray 60 ml.", precioMenudeo: 70.00, precioMayoreo: 37.00, imagen: "img/default.jpg" },
+  { nombre: "PROPOLEO spray 60 ml.", precioMenudeo: 80.00, precioMayoreo: 55.00, imagen: "img/default.jpg" },
   { nombre: "CERA DE ABEJA estampada 1 kg", precioMenudeo: 250.00, precioMayoreo: 200.00, imagen: "img/default.jpg" },
   { nombre: "CERA DE ABEJA en maqueta 1 kg", precioMenudeo: 240.00, precioMayoreo: 190.00, imagen: "img/default.jpg" },
   { nombre: "PANAL DE MIEL bastidor incluido", precioMenudeo: 400.00, precioMayoreo: 270.00, imagen: "img/default.jpg" },
@@ -335,7 +209,7 @@ const products = [
   { nombre: "PANAL DE MIEL medio bastidor", precioMenudeo: 210.00, precioMayoreo: 140.00, imagen: "img/default.jpg" },
   { nombre: "PANAL DE MIEL 1/4 del bastidor", precioMenudeo: 120.00, precioMayoreo: 70.00, imagen: "img/default.jpg" },
   { nombre: "MIEL CON PROPOLEO a granel 1 kg", precioMenudeo: 100.00, precioMayoreo: 45.00, imagen: "img/default.jpg" },
-  { nombre: "MIEL CON PROPOLEO lacteo 250 ml.", precioMenudeo: 50.00, precioMayoreo: 24.00, imagen: "img/default.jpg" },
+  { nombre: "MIEL CON PROPOLEO lacteo 250 ml.", precioMenudeo: 60.00, precioMayoreo: 38.00, imagen: "img/default.jpg" },
   { nombre: "MIEL CON PROPOLEO pet red. 250 ml", precioMenudeo: 50.00, precioMayoreo: 24.00, imagen: "img/mielpropoleo.jpeg" },
   { nombre: "MIEL CON PROPOLEO toper 1/4", precioMenudeo: 45.00, precioMayoreo: 21.00, imagen: "img/default.jpg" },
   { nombre: "MIEL CON PROPOLEO toper de 1/2", precioMenudeo: 80.00, precioMayoreo: 38.00, imagen: "img/default.jpg" },
@@ -343,10 +217,10 @@ const products = [
   { nombre: "MIEL CON PROPOLEO piña 1 lt", precioMenudeo: 140.00, precioMayoreo: 70.00, imagen: "img/default.jpg" },
   { nombre: "MIEL CON PROPOLEO cubeta 19 lt.", precioMenudeo: 1500.00, precioMayoreo: 1150.00, imagen: "img/default.jpg" },
   { nombre: "MIEL DE AGAVE a granel 1 kg", precioMenudeo: 140.00, precioMayoreo: 70.00, imagen: "img/default.jpg" },
-  { nombre: "MIEL DE AGAVE sq 250 ml.", precioMenudeo: 70.00, precioMayoreo: 35.00, imagen: "img/mielagave250.jpeg" },
-  { nombre: "MIEL DE AGAVE sq 500 ml.", precioMenudeo: 120.00, precioMayoreo: 60.00, imagen: "img/mielagave500.jpeg" },
+  { nombre: "MIEL DE AGAVE sq 250 ml.", precioMenudeo: 85.00, precioMayoreo: 57.00, imagen: "img/mielagave250.jpeg" },
+  { nombre: "MIEL DE AGAVE sq 500 ml.", precioMenudeo: 145.00, precioMayoreo: 98.00, imagen: "img/mielagave500.jpeg" },
   { nombre: "MIEL DE AGAVE piña 1 lt.", precioMenudeo: 200.00, precioMayoreo: 100.00, imagen: "img/mielagave.jpeg" },
-  { nombre: "MIEL DE AGAVE cubeta 19 lt./25 kg", precioMenudeo: 2100.00, precioMayoreo: 1700.00, imagen: "img/cubetaagave.jpeg" },
+  { nombre: "MIEL DE AGAVE cubeta 19 lt./25 kg", precioMenudeo: 2100.00, precioMayoreo: 1700.00, imagen: "img/default.jpg" },
   { nombre: "MIEL DE MAGUEY a granel 1 kg", precioMenudeo: 85.00, precioMayoreo: 42.00, imagen: "img/default.jpg" },
   { nombre: "MIEL DE MAGUEY toper 1/4", precioMenudeo: 40.00, precioMayoreo: 19.00, imagen: "img/default.jpg" },
   { nombre: "MIEL DE MAGUEY toper 1/2", precioMenudeo: 75.00, precioMayoreo: 35.00, imagen: "img/default.jpg" },
@@ -363,61 +237,61 @@ const products = [
   { nombre: "PROMAGUEY cubeta 19 lt.", precioMenudeo: 1500.00, precioMayoreo: 1170.00, imagen: "img/default.jpg" },
   { nombre: "COLMENECTAR 500 ml.", precioMenudeo: 250.00, precioMayoreo: 120.00, imagen: "img/colmenectar.jpeg" },
   { nombre: "CREMA jalea real 50 g", precioMenudeo: 100.00, precioMayoreo: 50.00, imagen: "img/crema.jpg" },
-  { nombre: "JARABE colmetox blanco 250 ml.", precioMenudeo: 70.00, precioMayoreo: 35.00, imagen: "img/colmetox.jpeg" },
-  { nombre: "JARABE extra forte 250 ml.", precioMenudeo: 85.00, precioMayoreo: 43.00, imagen: "img/colmetoxforte.jpeg" },
+  { nombre: "JARABE colmetox blanco 250 ml.", precioMenudeo: 85.00, precioMayoreo: 55.00, imagen: "img/colmetox.jpeg" },
+  { nombre: "JARABE extra forte 250 ml.", precioMenudeo: 100.00, precioMayoreo: 65.00, imagen: "img/colmetoxforte.jpeg" },
   { nombre: "JARABE colmetox premium 250 ml.", precioMenudeo: 100.00, precioMayoreo: 65.00, imagen: "img/jarabepremium.jpeg" },
-  { nombre: "CALENDULA con propoleo spray 60 ml.", precioMenudeo: 80.00, precioMayoreo: 35.00, imagen: "img/calendula.jpg" },
+  { nombre: "CALENDULA con propoleo spray 60 ml.", precioMenudeo: 80.00, precioMayoreo: 55.00, imagen: "img/calendula.jpg" },
   { nombre: "TILA STRESS gotas 55 ml.", precioMenudeo: 50.00, precioMayoreo: 25.00, imagen: "img/tila.jpeg" },
   { nombre: "CHOCHITO eucalipto sobre 60 g", precioMenudeo: 15.00, precioMayoreo: 7.50, imagen: "img/default.jpg" },
   { nombre: "CHOCHITO eucalipto mini 90g", precioMenudeo: 20.00, precioMayoreo: 10.00, imagen: "img/default.jpg" },
-  { nombre: "CHOCHITOS eucalipto frasco 170g", precioMenudeo: 50.00, precioMayoreo: 20.00, imagen: "img/default.jpg" },
+  { nombre: "CHOCHITOS eucalipto frasco 170g", precioMenudeo: 60.00, precioMayoreo: 45.00, imagen: "img/default.jpg" },
   { nombre: "CHOCHITOS eucalipto bolsa 1 kg", precioMenudeo: 100.00, precioMayoreo: 65.00, imagen: "img/default.jpg" },
   { nombre: "CHOCHITO propoleo sobre 60 g", precioMenudeo: 15.00, precioMayoreo: 7.50, imagen: "img/default.jpg" },
   { nombre: "CHOCHITO propoleo mini 90 g", precioMenudeo: 20.00, precioMayoreo: 10.00, imagen: "img/default.jpg" },
-  { nombre: "CHOCHITOS propoleo frasco 200g", precioMenudeo: 50.00, precioMayoreo: 20.00, imagen: "img/chochopropoleo200.jpeg" },
+  { nombre: "CHOCHITOS propoleo frasco 170g", precioMenudeo: 60.00, precioMayoreo: 45.00, imagen: "img/default.jpg" },
   { nombre: "CHOCHITOS propoleo bolsa 1 kg", precioMenudeo: 100.00, precioMayoreo: 65.00, imagen: "img/default.jpg" },
   { nombre: "CHOCHITO stress sobre 60 g", precioMenudeo: 15.00, precioMayoreo: 7.50, imagen: "img/default.jpg" },
   { nombre: "CHOCHITO stress mini 90g", precioMenudeo: 20.00, precioMayoreo: 10.00, imagen: "img/default.jpg" },
-  { nombre: "CHOCHITOS stress frasco 200 g", precioMenudeo: 50.00, precioMayoreo: 20.00, imagen: "img/chochoverde.jpeg" },
+  { nombre: "CHOCHITOS stress frasco 200 g", precioMenudeo: 60.00, precioMayoreo: 45.00, imagen: "img/chochoverde.jpeg" },
   { nombre: "CHOCHITOS stress bolsa de 1 kg", precioMenudeo: 100.00, precioMayoreo: 65.00, imagen: "img/default.jpg" },
   { nombre: "CHOCHITO energetico sobre 60 g", precioMenudeo: 15.00, precioMayoreo: 7.50, imagen: "img/default.jpg" },
   { nombre: "CHOCHITO energetico mini 90g", precioMenudeo: 20.00, precioMayoreo: 10.00, imagen: "img/default.jpg" },
-  { nombre: "CHOCHITOS energetico frasco 200 g", precioMenudeo: 50.00, precioMayoreo: 20.00, imagen: "img/chochitorojo200.jpeg" },
-  { nombre: "CHOCHITOS energetico bolsa 1 kg", precioMenudeo: 100.00, precioMayoreo: 65.00, imagen: "img/chochorojo1.jpeg" },
+  { nombre: "CHOCHITOS energetico frasco 170 g", precioMenudeo: 60.00, precioMayoreo: 45.00, imagen: "img/default.jpg" },
+  { nombre: "CHOCHITOS energetico bolsa 1 kg", precioMenudeo: 100.00, precioMayoreo: 65.00, imagen: "img/default.jpg" },
   { nombre: "CHOCHITO mango con chile bolsa 1 kg", precioMenudeo: 120.00, precioMayoreo: 75.00, imagen: "img/default.jpg" },
   { nombre: "CHOCHITO tamarindo con chile bolsa 1 kg", precioMenudeo: 120.00, precioMayoreo: 75.00, imagen: "img/default.jpg" },
   { nombre: "CHOCHITO mango con chile sobre 60 g", precioMenudeo: 15.00, precioMayoreo: 7.50, imagen: "img/default.jpg" },
   { nombre: "CHOCHITO tamarindo con chile sobre 60g", precioMenudeo: 15.00, precioMayoreo: 7.50, imagen: "img/default.jpg" },
   { nombre: "CHOCHITO mango con chile mini 90 g", precioMenudeo: 20.00, precioMayoreo: 10.00, imagen: "img/default.jpg" },
   { nombre: "CHOCHITO tamardido con chile mini 90 g", precioMenudeo: 20.00, precioMayoreo: 10.00, imagen: "img/default.jpg" },
-  { nombre: "CHOCHITO mango con chile frasco 180 g", precioMenudeo: 60.00, precioMayoreo: 22.00, imagen: "img/chochomango.jpeg" },
-  { nombre: "CHOCHITO tamarindo con chile frasco 170", precioMenudeo: 60.00, precioMayoreo: 22.00, imagen: "img/default.jpg" },
-  { nombre: "PALETA almendra bolsa 25 pz", precioMenudeo: 74.00, precioMayoreo: 37.00, imagen: "img/paletasalmendras.jpeg" },
-  { nombre: "PALETA eucalipto bolsa 25 pz", precioMenudeo: 60.00, precioMayoreo: 30.00, imagen: "img/paletaseucalipto.jpeg" },
-  { nombre: "PALETA propoleo bolsa 25 pz", precioMenudeo: 60.00, precioMayoreo: 30.00, imagen: "img/paletaspropoleo.jpeg" },
+  { nombre: "CHOCHITO mango con chile frasco 170 g", precioMenudeo: 60.00, precioMayoreo: 45.00, imagen: "img/default.jpg" },
+  { nombre: "CHOCHITO tamarindo con chile frasco 170", precioMenudeo: 60.00, precioMayoreo: 45.00, imagen: "img/default.jpg" },
+  { nombre: "PALETA almendra bolsa 25 pz", precioMenudeo: 74.00, precioMayoreo: 37.00, imagen: "img/default.jpg" },
+  { nombre: "PALETA eucalipto bolsa 25 pz", precioMenudeo: 60.00, precioMayoreo: 30.00, imagen: "img/default.jpg" },
+  { nombre: "PALETA propoleo bolsa 25 pz", precioMenudeo: 60.00, precioMayoreo: 30.00, imagen: "img/default.jpg" },
   { nombre: "PALETA stress bolsa 25 pz", precioMenudeo: 60.00, precioMayoreo: 30.00, imagen: "img/default.jpg" },
   { nombre: "PANALITO caramelo a granel 1 kg", precioMenudeo: 140.00, precioMayoreo: 70.00, imagen: "img/default.jpg" },
   { nombre: "PANALITO caramelo lacteo 200g", precioMenudeo: 40.00, precioMayoreo: 20.00, imagen: "img/default.jpg" },
   { nombre: "PANALITO caramelo sobre 70 g", precioMenudeo: 15.00, precioMayoreo: 7.50, imagen: "img/default.jpg" },
   { nombre: "GOMITA eucalipto sobrecito 70 g", precioMenudeo: 24.00, precioMayoreo: 12.00, imagen: "img/default.jpg" },
-  { nombre: "GOMITA eucalipto frasco 200 g", precioMenudeo: 60.00, precioMayoreo: 30.00, imagen: "img/gomitaamarilla.jpeg" },
+  { nombre: "GOMITA eucalipto frasco 200 g", precioMenudeo: 75.00, precioMayoreo: 50.00, imagen: "img/default.jpg" },
   { nombre: "GOMITA eucalipto bolsa 1 kg", precioMenudeo: 220.00, precioMayoreo: 110.00, imagen: "img/default.jpg" },
   { nombre: "GOMITA propoleo sobrecito 70 g", precioMenudeo: 24.00, precioMayoreo: 12.00, imagen: "img/default.jpg" },
-  { nombre: "GOMITA propoleo envase 200g", precioMenudeo: 60.00, precioMayoreo: 30.00, imagen: "img/gomitapropoleo.jpeg" },
-  { nombre: "GOMITA propoleo bolsa 1 kg", precioMenudeo: 220.00, precioMayoreo: 110.00, imagen: "img/default.jpeg" },
+  { nombre: "GOMITA propoleo envase 200g", precioMenudeo: 75.00, precioMayoreo: 50.00, imagen: "img/default.jpg" },
+  { nombre: "GOMITA propoleo bolsa 1 kg", precioMenudeo: 220.00, precioMayoreo: 110.00, imagen: "img/default.jpg" },
   { nombre: "GOMITA stress sobrecito 70 g", precioMenudeo: 24.00, precioMayoreo: 12.00, imagen: "img/default.jpg" },
-  { nombre: "GOMITA stress envase 200 g", precioMenudeo: 60.00, precioMayoreo: 30.00, imagen: "img/gomitatila.jpeg" },
+  { nombre: "GOMITA stress envase 200 g", precioMenudeo: 75.00, precioMayoreo: 50.00, imagen: "img/default.jpg" },
   { nombre: "GOMITA stress bolsa 1 kg", precioMenudeo: 220.00, precioMayoreo: 110.00, imagen: "img/default.jpg" },
   { nombre: "GOMITA energetica sobrecito 70 g", precioMenudeo: 24.00, precioMayoreo: 12.00, imagen: "img/default.jpg" },
-  { nombre: "GOMITA energetica envase 200 g", precioMenudeo: 60.00, precioMayoreo: 30.00, imagen: "img/gomitaroja.jpeg" },
+  { nombre: "GOMITA energetica envase 200 g", precioMenudeo: 75.00, precioMayoreo: 50.00, imagen: "img/default.jpg" },
   { nombre: "GOMITA energetica bolsa 1 kg", precioMenudeo: 220.00, precioMayoreo: 110.00, imagen: "img/default.jpg" },
-  { nombre: "PALANQUETA con miel", precioMenudeo: 160.00, precioMayoreo: 80.00, imagen: "img/palanqueta.jpeg" },
-  { nombre: "PALANQUETA cereales y polen", precioMenudeo: 180.00, precioMayoreo: 90.00, imagen: "img/default.jpg" },
-  { nombre: "JUGO MAGUEY silvestre", precioMenudeo: 110.00, precioMayoreo: 55.00, imagen: "img/jugomaguey.jpeg" },
+  { nombre: "PALANQUETA con miel", precioMenudeo: 160.00, precioMayoreo: 80.00, imagen: "img/default.jpg" },
+  { nombre: "PALANQUETA cereales y polen", precioMenudeo: 200.00, precioMayoreo: 135.00, imagen: "img/default.jpg" },
+  { nombre: "JUGO MAGUEY silvestre", precioMenudeo: 140.00, precioMayoreo: 95.00, imagen: "img/jugomaguey.jpeg" },
   { nombre: "JUGO MAGUEY compuesto", precioMenudeo: 120.00, precioMayoreo: 60.00, imagen: "img/default.jpg" },
-  { nombre: "SHAMPOO jalea real 450 ml.", precioMenudeo: 120.00, precioMayoreo: 60.00, imagen: "img/shampooreal.jpeg" },
-  { nombre: "SHAMPOO miel de abeja 450 ml.", precioMenudeo: 110.00, precioMayoreo: 55.00, imagen: "img/shampoomiel.jpeg" },
-  { nombre: "SHAMPOO polen 450 ml.", precioMenudeo: 110.00, precioMayoreo: 55.00, imagen: "img/shampoopolen.jpeg" },
+  { nombre: "SHAMPOO jalea real 450 ml.", precioMenudeo: 120.00, precioMayoreo: 60.00, imagen: "img/default.jpg" },
+  { nombre: "SHAMPOO miel de abeja 450 ml.", precioMenudeo: 110.00, precioMayoreo: 55.00, imagen: "img/default.jpg" },
+  { nombre: "SHAMPOO polen 450 ml.", precioMenudeo: 110.00, precioMayoreo: 55.00, imagen: "img/default.jpg" },
   { nombre: "NATURACTIVA energetico 250 ml", precioMenudeo: 90.00, precioMayoreo: 45.00, imagen: "img/naturactiva250.jpeg" },
   { nombre: "NATURACTIVA energetico 500 ml", precioMenudeo: 170.00, precioMayoreo: 85.00, imagen: "img/naturactiva500.jpeg" },
   { nombre: "POMADA veneno de abeja 100 g", precioMenudeo: 50.00, precioMayoreo: 25.00, imagen: "img/pomada.jpeg" },
@@ -543,8 +417,7 @@ function updateCart(){
         <div class="qty-controls">
           <button onclick="changeQty(${idx},-1)">-</button>
           <button onclick="changeQty(${idx},1)">+</button>
-          <button onclick="removeProduct(${idx})">✕</button>
-
+          <button onclick="removeProduct(${idx})" style="background:#ffdede;border:1px solid #f6b0b0;padding:6px;border-radius:6px;margin-left:6px">X</button>
         </div>
       </div>
     `;
@@ -591,7 +464,7 @@ document.getElementById('sendWhats').addEventListener('click', ()=> {const folio
 
   const name = document.getElementById('clientName').value || "Cliente";
   const address = document.getElementById('clientAddress').value || "";
-  const phone = "5213318553688"; // <-- reemplaza TU_NUMERO por tu WhatsApp sin signos
+  const phone = "5216642338889"; // <-- reemplaza TU_NUMERO por tu WhatsApp sin signos
 
   let totalProducts = selected.reduce((sum,item)=>sum+item.qty,0);
   let tipoCompra = isMayoreo ? "MAYOREO" : "MENUDEO";
@@ -654,8 +527,5 @@ isMayoreo = false;
     modal.style.display = 'none';
   }
 </script>
-<button id="cartFloat" onclick="scrollToCart()">
-  🛒 <span id="cartCount">0</span>
-</button>
 </body>
 </html>
