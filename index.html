@@ -337,9 +337,12 @@ let isMayoreo = false;
 /* --- RENDER PRODUCTOS --- */
 function renderProducts(filter=''){
   productListDiv.innerHTML = '';
-  const list = products.filter(p => p.nombre.toLowerCase().includes(filter.toLowerCase()));
+  const list = products
+  .map((p, index) => ({ ...p, originalIndex: index }))
+  .filter(p => p.nombre.toLowerCase().includes(filter.toLowerCase()));
   if(list.length===0){ productListDiv.innerHTML = '<div style="padding:10px;color:var(--muted)">No se encontraron productos.</div>'; return; }
-  list.forEach((p,i)=>{
+  products.forEach((p, i) => {
+  if (!p.nombre.toLowerCase().includes(filter.toLowerCase())) return;
     const row = document.createElement('div');
     row.className = 'product-item';
     row.innerHTML = `
@@ -375,7 +378,7 @@ function renderProducts(filter=''){
         id="qty_${i}"
         style="width:60px;padding:5px;border-radius:6px;border:1px solid #eee"
       />
-      <button onclick="addProduct(${i})">Agregar</button>
+      <button onclick="addProduct(${products.indexOf(p)})">Agregar</button>
     </div>
 
   </div>
@@ -460,16 +463,38 @@ document.getElementById('checkCodeBtn').addEventListener('click', ()=> {
 /* --- ENVÍO POR WHATSAPP --- */
 document.getElementById('sendWhats').addEventListener('click', ()=> {const folioText = "MIEL-" + String(folio).padStart(5, "0");
 
-  if(selected.length === 0){ alert('El carrito está vacío.'); return; }
+  if(selected.length === 0){ 
+  alert('El carrito está vacío.'); 
+  return; 
+}
 
-  const name = document.getElementById('clientName').value || "Cliente";
-  const address = document.getElementById('clientAddress').value || "";
-  const phone = "5216642338889"; // <-- reemplaza TU_NUMERO por tu WhatsApp sin signos
+const name = document.getElementById('clientName').value.trim();
+const clientPhone = document.getElementById('clientPhone').value.trim();
+const address = document.getElementById('clientAddress').value || "";
+
+// VALIDACIONES
+if(name === ""){
+  alert("Ingresa el nombre del cliente");
+  return;
+}
+
+if(clientPhone === ""){
+  alert("Ingresa el número de teléfono");
+  return;
+}
+
+// Validar teléfono (10 dígitos México)
+if(!/^[0-9]{10}$/.test(clientPhone)){
+  alert("El número debe tener 10 dígitos");
+  return;
+}
+
+const phone = "5216642338889"; // tu número de WhatsApp
 
   let totalProducts = selected.reduce((sum,item)=>sum+item.qty,0);
   let tipoCompra = isMayoreo ? "MAYOREO" : "MENUDEO";
 
-  let message = `*Pedido La Colmena*\nFolio: ${folioText}\nCliente: ${name}\n${address? "Domicilio: "+address+"\n" : ""}`;
+  let message = `*Pedido La Colmena*\nFolio: ${folioText}\nCliente: ${name}\nTeléfono: ${clientPhone}\n${address? "Domicilio: "+address+"\n" : ""}`;
   message += `Tipo de compra: ${tipoCompra}\nCantidad total de productos: ${totalProducts}\n\n`;
 
   selected.forEach(item => {
