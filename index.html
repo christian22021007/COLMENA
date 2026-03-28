@@ -323,7 +323,10 @@ const products = [
 
 /* --- ESTADO --- */
 let selected = [];
-let folio = parseInt(localStorage.getItem('folio') || "1");
+let folio = parseInt(localStorage.getItem('folio')) || 1;
+
+// GUARDAR DESDE QUE ABRE (IMPORTANTE)
+localStorage.setItem('folio', folio);
 let folioText = "MIEL-" + String(folio).padStart(5, "0");
 document.getElementById('folioSpan').textContent = folioText;
 document.getElementById('dateSpan').textContent = new Date().toLocaleDateString();
@@ -510,6 +513,11 @@ const phone = "5216642338889"; // tu número de WhatsApp
 // --- INCREMENTAR Y GUARDAR FOLIO ---
 folio++;
 localStorage.setItem('folio', folio);
+
+// refuerzo (para celular)
+setTimeout(() => {
+  localStorage.setItem('folio', folio);
+}, 100);
 document.getElementById('folioSpan').textContent = `MIEL-${String(folio).padStart(5,'0')}`;
 // --- LIMPIAR CARRITO DESPUÉS DE ENVIAR ---
 selected = [];
@@ -551,6 +559,14 @@ isMayoreo = false;
     const modal = document.getElementById('imageModal');
     modal.style.display = 'none';
   }
+window.addEventListener('beforeunload', () => {
+  localStorage.setItem('folio', folio);
+});
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') {
+    localStorage.setItem('folio', folio);
+  }
+});
 </script>
 </body>
 </html>
