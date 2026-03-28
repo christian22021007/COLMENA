@@ -323,7 +323,7 @@ const products = [
 
 /* --- ESTADO --- */
 let selected = [];
-let folio = parseInt(localStorage.getItem('folioNumber') || "1");
+let folio = parseInt(localStorage.getItem('folio') || "1");
 let folioText = "MIEL-" + String(folio).padStart(5, "0");
 document.getElementById('folioSpan').textContent = folioText;
 document.getElementById('dateSpan').textContent = new Date().toLocaleDateString();
