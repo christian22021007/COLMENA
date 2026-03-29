@@ -59,10 +59,14 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <style>
-  :root{--accent:#f7c84f;--bg:#fffdf6;--muted:#555;}
+  :root{
+  --accent:#f2d729;   /* amarillo */
+  --bg:#fffbea;       /* fondo suave */
+  --muted:#8f6a14;    /* café oscuro */
+}
   body{font-family:Arial,system-ui,sans-serif;background:var(--bg);margin:0;padding:16px;color:#111}
   header{background:var(--accent);padding:14px;border-radius:8px;text-align:center;font-weight:800}
-  h1{margin:0;font-size:20px;color:red} /* Letras rojas */
+  h1{margin:0;font-size:20px;color:#8f6a14} /* Letras rojas */
   .layout{display:flex;gap:16px;margin-top:12px}
   .left{flex:1;min-width:260px}
   .right{width:360px;position:relative}
@@ -87,7 +91,7 @@
 <header style="
   width:100%;
   height:160px;
-  background-color:#f7c84f;
+  background-color:#f9ff2e
   border-radius:8px;
   display:flex;
   justify-content:center;
@@ -437,6 +441,10 @@ function updateCart(){
   document.querySelectorAll('.mayoreo_display').forEach(el => el.style.display = isMayoreo?'block':'none');
   mayoreoNotice.style.display = isMayoreo?'block':'none';
   totalDiv.textContent = `Total: ${money(total)}`;
+
+// 🔴 CONTADOR DEL CARRITO (AQUÍ ES DONDE DEBE IR)
+let totalItems = selected.reduce((sum, item) => sum + item.qty, 0);
+document.getElementById('cartCount').textContent = totalItems;
 }
 
 window.changeQty = function(index, delta){
@@ -551,6 +559,38 @@ isMayoreo = false;
   </div>
 </div>
 
+</script>
+
+<div id="floatingCart" style="
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#f9ff2e;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:24px;
+  font-weight:bold;
+  box-shadow:0 4px 10px rgba(0,0,0,0.3);
+  z-index:9999;
+  cursor:pointer;
+">
+  🛒
+  <span id="cartCount" style="
+    position:absolute;
+    top:-5px;
+    right:-5px;
+    background:red;
+    color:#fff;
+    font-size:12px;
+    padding:3px 6px;
+    border-radius:50%;
+  ">0</span>
+</div>
+
 <script>
   function openModal(src){
     const modal = document.getElementById('imageModal');
@@ -563,14 +603,70 @@ isMayoreo = false;
     const modal = document.getElementById('imageModal');
     modal.style.display = 'none';
   }
-window.addEventListener('beforeunload', () => {
-  localStorage.setItem('folio', folio);
-});
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'hidden') {
+
+  window.addEventListener('beforeunload', () => {
     localStorage.setItem('folio', folio);
-  }
-});
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+      localStorage.setItem('folio', folio);
+    }
+  });
+
+  const floatingCart = document.getElementById("floatingCart");
+
+  floatingCart.addEventListener('click', () => {
+    document.getElementById('cart').scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+
+  let isDragging = false;
+  let offsetX, offsetY;
+
+  // MOUSE
+  floatingCart.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    offsetX = e.clientX - floatingCart.offsetLeft;
+    offsetY = e.clientY - floatingCart.offsetTop;
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (isDragging) {
+      floatingCart.style.left = (e.clientX - offsetX) + "px";
+      floatingCart.style.top = (e.clientY - offsetY) + "px";
+      floatingCart.style.right = "auto";
+      floatingCart.style.bottom = "auto";
+    }
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
+
+  // TOUCH (CELULAR)
+  floatingCart.addEventListener("touchstart", (e) => {
+    isDragging = true;
+    const touch = e.touches[0];
+    offsetX = touch.clientX - floatingCart.offsetLeft;
+    offsetY = touch.clientY - floatingCart.offsetTop;
+  });
+
+  document.addEventListener("touchmove", (e) => {
+    if (isDragging) {
+      const touch = e.touches[0];
+      floatingCart.style.left = (touch.clientX - offsetX) + "px";
+      floatingCart.style.top = (touch.clientY - offsetY) + "px";
+      floatingCart.style.right = "auto";
+      floatingCart.style.bottom = "auto";
+    }
+  });
+
+  document.addEventListener("touchend", () => {
+    isDragging = false;
+  });
 </script>
+
 </body>
 </html>
